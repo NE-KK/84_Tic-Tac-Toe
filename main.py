@@ -27,29 +27,60 @@ def check_field() -> bool:
         return False
 
 
+def check_for_win(cfw_player: str) -> bool:
+    # check horizontal fields
+    if field[0] == cfw_player and field[1] == cfw_player and field[2] == cfw_player:
+        return True
+    elif  field[3] == cfw_player and field[4] == cfw_player and field[5] == cfw_player:
+        return True
+    elif  field[6] == cfw_player and field[7] == cfw_player and field[8] == cfw_player:
+        return True
+    # check vertical fields
+    elif field[0] == cfw_player and field[3] == cfw_player and field[6] == cfw_player:
+        return True
+    elif field[1] == cfw_player and field[4] == cfw_player and field[7] == cfw_player:
+        return True
+    elif field[2] == cfw_player and field[5] == cfw_player and field[8] == cfw_player:
+        return True
+    # check diagonal fields
+    elif field[0] == cfw_player and field[4] == cfw_player and field[8] == cfw_player:
+        return True
+    elif field[2] == cfw_player and field[4] == cfw_player and field[6] == cfw_player:
+        return True
+    else:
+        return False
+
 
 if __name__ == "__main__":
     print("Welcome to the Tic Tac Toe game.")
     is_running = True
-    players = ["X", "O"]
-    game_round = 1
-    field = ["-", "-", "-",
-             "-", "-", "-",
-             "-", "-", "-"]
-
-    print_field(field)
-    is_free = check_field()
-
 
     while is_running:
-        player = choose_player(game_round, players)
-        print(f"Current player {player}")
-        player_field = int(input(f"Choose a field 0-8: "))
-        field[player_field] = player
+        is_won = False
+        players = ["X", "O"]
+        game_round = 1
+        field = ["-", "-", "-",
+                 "-", "-", "-",
+                 "-", "-", "-"]
+
         print_field(field)
+        is_free = check_field()
+
+
+        while not is_won:
+            player = choose_player(game_round, players)
+            print(f"Current player {player}")
+            player_field = int(input(f"Choose a field 0-8: "))
+            field[player_field] = player
+            print_field(field)
+            game_round += 1
+
+            is_won = check_for_win(player)
+
+
         next_round = input("Play another round y/n: ")
-        game_round += 1
         if next_round == "n":
             is_running = False
 
-    print("Game ends")
+        print("Game ends")
+
