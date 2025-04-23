@@ -35,6 +35,7 @@ def check_for_win(cfw_player: str) -> bool:
         return True
     elif  field[6] == cfw_player and field[7] == cfw_player and field[8] == cfw_player:
         return True
+
     # check vertical fields
     elif field[0] == cfw_player and field[3] == cfw_player and field[6] == cfw_player:
         return True
@@ -42,6 +43,7 @@ def check_for_win(cfw_player: str) -> bool:
         return True
     elif field[2] == cfw_player and field[5] == cfw_player and field[8] == cfw_player:
         return True
+
     # check diagonal fields
     elif field[0] == cfw_player and field[4] == cfw_player and field[8] == cfw_player:
         return True
@@ -52,12 +54,14 @@ def check_for_win(cfw_player: str) -> bool:
 
 
 if __name__ == "__main__":
-    print("Welcome to the Tic Tac Toe game.")
     is_running = True
 
     while is_running:
+        # Set up the game
+        print("Welcome to the Tic Tac Toe game.")
         is_won = False
         players = ["X", "O"]
+        player = "-"
         game_round = 1
         field = ["-", "-", "-",
                  "-", "-", "-",
@@ -68,16 +72,25 @@ if __name__ == "__main__":
 
 
         while not is_won:
+            field_is_free = False
             player = choose_player(game_round, players)
             print(f"Current player {player}")
-            player_field = int(input(f"Choose a field 0-8: "))
-            field[player_field] = player
+
+            while not field_is_free:
+                player_field = int(input(f"Choose a field 0-8: "))
+                if field[player_field] == "-":
+                    field[player_field] = player
+                    field_is_free = True
+                else:
+                    print("No empty field!")
+
             print_field(field)
             game_round += 1
-
             is_won = check_for_win(player)
 
 
+        print("-----------------------------------------------------------")
+        print(f"Congratulation to {player}. You Won")
         next_round = input("Play another round y/n: ")
         if next_round == "n":
             is_running = False
