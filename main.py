@@ -93,7 +93,17 @@ if __name__ == "__main__":
             print(f"Current player {player}")
 
             while not field_is_free:
-                player_field = int(input(f"Choose a field 0-8: "))
+                valid_number = False
+                while not valid_number:
+                    try:
+                        player_field = int(input(f"Choose a field 0-8: "))
+                        if 0 <= player_field <= 8:
+                            valid_number = True
+                        else:
+                            print(f"{player_field} is out of range.")
+                    except ValueError:
+                        print("Type a number.")
+
                 if field[player_field] == "-":
                     field[player_field] = player
                     field_is_free = True
@@ -109,7 +119,7 @@ if __name__ == "__main__":
 
 
         print("-----------------------------------------------------------")
-        print(f"Congratulation to {player}. You Won")
+        print(f"Congratulation to {player}. You Won!")
         next_round = input("Play another round y/n: ")
         if next_round == "n":
             is_running = False
