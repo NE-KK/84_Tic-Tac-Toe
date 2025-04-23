@@ -1,6 +1,11 @@
 # 84 Tic Tac Toe
 
 def print_field(pf_field):
+    """
+    Print the current field
+    Takes field array as input
+    :param pf_field:
+    """
     print(pf_field[0:3])
     print(pf_field[3:6])
     print(pf_field[6:9])
@@ -20,7 +25,11 @@ def choose_player(cp_round: int, cp_players: list) -> str:
 
 
 def check_field() -> bool:
-
+    """
+    Checks for empty fields.
+    Returns True if empty marks (-) in the field.
+    :return:
+    """
     if "-" in field:
         return True
     else:
@@ -28,6 +37,13 @@ def check_field() -> bool:
 
 
 def check_for_win(cfw_player: str) -> bool:
+    """
+    Checks if 3 player marks (X or O) are in a row.
+    Takes player mark (X or O) as input.
+    Returns True if 3 player marks are in a row, otherwise it returns False
+    :param cfw_player:
+    :return:
+    """
     # check horizontal fields
     if field[0] == cfw_player and field[1] == cfw_player and field[2] == cfw_player:
         return True
@@ -59,7 +75,7 @@ if __name__ == "__main__":
     while is_running:
         # Set up the game
         print("Welcome to the Tic Tac Toe game.")
-        is_won = False
+        game_is_on = True
         players = ["X", "O"]
         player = "-"
         game_round = 1
@@ -71,7 +87,7 @@ if __name__ == "__main__":
         is_free = check_field()
 
 
-        while not is_won:
+        while game_is_on:
             field_is_free = False
             player = choose_player(game_round, players)
             print(f"Current player {player}")
@@ -87,6 +103,9 @@ if __name__ == "__main__":
             print_field(field)
             game_round += 1
             is_won = check_for_win(player)
+
+            if is_won:
+                game_is_on = False
 
 
         print("-----------------------------------------------------------")
