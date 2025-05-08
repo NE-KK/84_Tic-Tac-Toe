@@ -24,6 +24,20 @@ def choose_player(cp_round: int, cp_players: list) -> str:
         return cp_players[1]
 
 
+def choose_player_field():
+    valid_number = False
+    while not valid_number:
+        try:
+            cpf_player_field = int(input(f"Choose a field 0-8: "))
+            if 0 <= cpf_player_field <= 8:
+                valid_number = True
+                return cpf_player_field
+            else:
+                print(f"{cpf_player_field} is out of range.")
+        except ValueError:
+            print("Type a number.")
+
+
 def check_field() -> bool:
     """
     Checks for empty fields.
@@ -93,16 +107,7 @@ if __name__ == "__main__":
             print(f"Current player {player}")
 
             while not field_is_free:
-                valid_number = False
-                while not valid_number:
-                    try:
-                        player_field = int(input(f"Choose a field 0-8: "))
-                        if 0 <= player_field <= 8:
-                            valid_number = True
-                        else:
-                            print(f"{player_field} is out of range.")
-                    except ValueError:
-                        print("Type a number.")
+                player_field = choose_player_field()
 
                 if field[player_field] == "-":
                     field[player_field] = player
